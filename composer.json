@@ -1,17 +1,23 @@
 {
     "name": "shophy/tclexiang",
     "description": "tencent lexiang sdk",
-    "autoload": {
-        "psr-4": {
-            "shophy\\tclexiang\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "shophy",
             "email": "shophyliu@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">=7.1.0",
+        "php-http/guzzle6-adapter": "^1.0",
+        "woohoolabs/yang": "*",
+        "qcloud/cos-sdk-v5": "v2.0.1",
+        "tencentcloud/tencentcloud-sdk-php": "3.0.94"
+    },
+    "autoload": {
+        "psr-4": {
+            "shophy\\tclexiang\\": "src/"
+        }
+    },
     "license": "MIT"
 }

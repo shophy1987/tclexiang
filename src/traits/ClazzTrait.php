@@ -1,8 +1,8 @@
 <?php
 
-namespace shophy\tclexiang\trait;
+namespace shophy\tclexiang;
 
-Trait ClazzTrait
+trait ClazzTrait
 {
     protected function prepareDocument($attributes, $options = [])
     {
