@@ -12,5 +12,6 @@
             "email": "shophyliu@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "license": "MIT"
 }
