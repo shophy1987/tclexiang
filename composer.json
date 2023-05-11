@@ -1,0 +1,16 @@
+{
+    "name": "shophy/tclexiang",
+    "description": "tencent lexiang sdk",
+    "autoload": {
+        "psr-4": {
+            "Shophy\\Tclexiang\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "shophy",
+            "email": "shophyliu@gmail.com"
+        }
+    ],
+    "require": {}
+}
