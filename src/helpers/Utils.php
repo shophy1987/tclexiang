@@ -1,8 +1,8 @@
 <?php
 
-namespace Shophy\Tclexiang\Helper;
+namespace shophy\tclexiang\helper;
 
-use Shophy\Tclexiang\Exception\ArgumentException;
+use shophy\tclexiang\exception\ArgumentException;
 
 class Utils
 {

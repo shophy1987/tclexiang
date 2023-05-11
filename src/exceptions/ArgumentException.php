@@ -1,6 +1,6 @@
 <?php
 
-namespace Shophy\Tclexiang\Exception;
+namespace shophy\tclexiang\exception;
 
 class ArgumentException extends \Exception
 {

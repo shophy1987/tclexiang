@@ -1,6 +1,6 @@
 <?php
 
-namespace Shophy\Tclexiang;
+namespace shophy\tclexiang;
 
 class Service
 {

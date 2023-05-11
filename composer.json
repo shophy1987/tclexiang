@@ -3,7 +3,7 @@
     "description": "tencent lexiang sdk",
     "autoload": {
         "psr-4": {
-            "Shophy\\Tclexiang\\": "src/"
+            "shophy\\tclexiang\\": "src/"
         }
     },
     "authors": [

@@ -1,6 +1,6 @@
 <?php
 
-namespace Shophy\Tclexiang\Trait;
+namespace shophy\tclexiang\trait;
 
 Trait ClazzTrait
 {
