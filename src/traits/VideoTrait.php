@@ -1,11 +1,10 @@
 <?php
 
-namespace shophy\tclexiang;
+namespace shophy\tclexiang\traits;
 
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client as HttpClient;
 use Exception;
-use shophy\tclexiang\exception\ApiException;
 
 trait VideoTrait
 {
@@ -50,7 +49,7 @@ trait VideoTrait
             ],
         ]);
         if ($response->getStatusCode() !== 200) {
-            throw new ApiException('获取视频上传接口失败');
+            throw new exceptions\ApiException('获取视频上传接口失败');
         }
         $response = json_decode($response->getBody()->getContents(), true);
         return $response['signature'];

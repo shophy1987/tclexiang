@@ -1,9 +1,6 @@
 <?php
 
-namespace shophy\tclexiang;
-
-use shophy\tclexiang\helper\Utils;
-use shophy\tclexiang\exception\ArgumentException;
+namespace shophy\tclexiang\traits;
 
 trait NotifyTrait
 {
@@ -11,17 +8,17 @@ trait NotifyTrait
 
     public function setCallbackSecret($callback_secret)
     {
-        Utils::checkNotEmptyStr($callback_secret, "callback_secret");
+        helpers\Utils::checkNotEmptyStr($callback_secret, "callback_secret");
         $this->callback_secret = $callback_secret;
     }
 
     public function verifyMessage($suite_id, $nonce, $timestamp, $sign)
     {
         if ($suite_id != $this->suite_id) {
-            throw new ArgumentException('无效的suite_id', $suite_id);
+            throw new exceptions\ArgumentException('无效的suite_id', $suite_id);
         }
         if ($sign != sha1($nonce . $this->callback_secret . $timestamp)) {
-            throw new ArgumentException('无效的签名', $sign);
+            throw new exceptions\ArgumentException('无效的签名', $sign);
         }
     }
 

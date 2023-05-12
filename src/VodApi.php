@@ -4,7 +4,6 @@ namespace shophy\tclexiang;
 
 use GuzzleHttp\Client as HttpClient;
 use Qcloud\Cos\Client as CosClient;
-use shophy\tclexiang\exception\ApiException;
 
 class VodApi
 {
@@ -52,7 +51,7 @@ class VodApi
         //1. 申请上传
         $applyUploadResponse = $this->applyUpload();
         if (empty($applyUploadResponse) || $applyUploadResponse['code'] != 0) {
-            throw new ApiException('申请上传视频失败');
+            throw new exceptions\ApiException('申请上传视频失败');
         }
         // videoData
         $applyUploadResponseData = isset($applyUploadResponse['data']) ? $applyUploadResponse['data'] : [];
@@ -130,7 +129,7 @@ class VodApi
         ];
         $response = $client->request('POST', $url, ['json' => $data]);
         if ($response->getStatusCode() != 200) {
-            throw new ApiException('申请视频上传失败，返回码:' . $response->getStatusCode());
+            throw new exceptions\ApiException('申请视频上传失败，返回码:' . $response->getStatusCode());
         }
         return json_decode($response->getBody(), true);
     }
@@ -153,7 +152,7 @@ class VodApi
         ];
         $response = $client->request('POST', $url, ['json' => $data]);
         if ($response->getStatusCode() != 200) {
-            throw new ApiException('确认视频上传失败，返回码:' . $response->getStatusCode());
+            throw new exceptions\ApiException('确认视频上传失败，返回码:' . $response->getStatusCode());
         }
         return json_decode($response->getBody(), true);
     }

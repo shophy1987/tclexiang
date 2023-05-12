@@ -2,7 +2,6 @@
 
 namespace shophy\tclexiang;
 
-use shophy\tclexiang\helper\Utils;
 use GuzzleHttp\Psr7\Request;
 use Http\Adapter\Guzzle6\Client;
 use WoohooLabs\Yang\JsonApi\Client\JsonApiClient;
@@ -10,23 +9,23 @@ use WoohooLabs\Yang\JsonApi\Response\JsonApiResponse;
 
 abstract class CorpApi extends Api
 {
-    use DocTrait;
-    use QuestionTrait;
-    use ThreadTrait;
-    use CategoryTrait;
-    use CommentTrait;
-    use LikeTrait;
-    use TeamTrait;
-    use PointTrait;
-    use AttachmentTrait;
-    use VideoTrait;
-    use LiveTrait;
-    use ClazzTrait;
-    use CourseTrait;
-    use CertificateRewardTrait;
-    use ShareTrait;
-    use ExamTrait;
-    use ContactTrait;
+    use traits\DocTrait;
+    use traits\QuestionTrait;
+    use traits\ThreadTrait;
+    use traits\CategoryTrait;
+    use traits\CommentTrait;
+    use traits\LikeTrait;
+    use traits\TeamTrait;
+    use traits\PointTrait;
+    use traits\AttachmentTrait;
+    use traits\VideoTrait;
+    use traits\LiveTrait;
+    use traits\ClazzTrait;
+    use traits\CourseTrait;
+    use traits\CertificateRewardTrait;
+    use traits\ShareTrait;
+    use traits\ExamTrait;
+    use traits\ContactTrait;
 
 	const VERSION = 'v1';
 	const MAIN_URL = 'https://lxapi.lexiangla.com/cgi-bin';
@@ -43,8 +42,8 @@ abstract class CorpApi extends Api
 
     public function __construct($app_key = '', $app_secret = '')
     {
-    	Utils::checkNotEmptyStr($app_key, 'app_key');
-        Utils::checkNotEmptyStr($app_secret, 'app_secret');
+    	helpers\Utils::checkNotEmptyStr($app_key, 'app_key');
+        helpers\Utils::checkNotEmptyStr($app_secret, 'app_secret');
 
         $this->key = $app_key;
         $this->app_secret = $app_secret;
@@ -131,7 +130,7 @@ abstract class CorpApi extends Api
         }
 
         $cache_key = self::ACCESS_TOKEN . $this->key;
-        $this->access_token = getCache($cache_key);
+        $this->access_token = $this->getCache($cache_key);
         if ($this->access_token) {
             return $this->access_token;
         }
@@ -145,13 +144,13 @@ abstract class CorpApi extends Api
         $response = $client->post(self::MAIN_URL . '/token', $options);
         $response = json_decode($response->getBody()->getContents(), true);
         $this->access_token = $response['access_token'];
-        setCache($cache_key, $this->access_token, $response['expires_in']);
+        $this->setCache($cache_key, $this->access_token, $response['expires_in']);
         return $this->access_token;
     }
 
     public function setAccessToken($access_token)
     {
-        Utils::checkNotEmptyStr($access_token, 'access_token');
+        helpers\Utils::checkNotEmptyStr($access_token, 'access_token');
         $this->access_token = $access_token;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace shophy\tclexiang;
+namespace shophy\tclexiang\traits;
 
 trait CertificateRewardTrait
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace shophy\tclexiang\exception;
+namespace shophy\tclexiang\exceptions;
 
 class ApiException extends \Exception
 {

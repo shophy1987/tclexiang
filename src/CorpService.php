@@ -2,7 +2,6 @@
 
 namespace shophy\tclexiang;
 
-use shophy\tclexiang\helper\Utils;
 use GuzzleHttp\Psr7\Request;
 use Http\Adapter\Guzzle6\Client;
 use WoohooLabs\Yang\JsonApi\Client\JsonApiClient;
@@ -10,7 +9,7 @@ use WoohooLabs\Yang\JsonApi\Response\JsonApiResponse;
 
 abstract class CorpService extends Api
 {
-    use NotifyTrait;
+    use traits\NotifyTrait;
 
 	const MAIN_URL = 'https://lxapi.lexiangla.com/cgi-bin/service';
     const SUITE_TICKET_PREFIX = 'LX-SUITE-TICKET-';
@@ -25,8 +24,8 @@ abstract class CorpService extends Api
 
     public function __construct($suite_id, $suite_secret)
     {
-        Utils::checkNotEmptyStr($suite_id, "suite_id");
-        Utils::checkNotEmptyStr($suite_secret, "suite_secret");
+        helpers\Utils::checkNotEmptyStr($suite_id, "suite_id");
+        helpers\Utils::checkNotEmptyStr($suite_secret, "suite_secret");
 
         $this->suite_id = $suite_id;
         $this->suite_secret = $suite_secret;
@@ -38,18 +37,18 @@ abstract class CorpService extends Api
             return $this->suite_ticket;
         }
 
-        $this->suite_ticket = getCache(self::SUITE_TICKET_CACHE_PREFIX . $this->suite_id);
+        $this->suite_ticket = $this->getCache(self::SUITE_TICKET_CACHE_PREFIX . $this->suite_id);
         if ($this->suite_ticket) {
             return $this->suite_ticket;
         }
 
-        throw new ApiException('无效的suite_ticket');
+        throw new exceptions\ApiException('无效的suite_ticket');
     }
 
     public function setSuiteTicket($suite_ticket)
     {
         $this->suite_ticket = $suite_ticket;
-        setCache(self::SUITE_TICKET_CACHE_PREFIX . $this->suite_id, $this->suite_ticket, 600);
+        $this->setCache(self::SUITE_TICKET_CACHE_PREFIX . $this->suite_id, $this->suite_ticket, 600);
     }
 
     public function getSuiteToken()
@@ -59,7 +58,7 @@ abstract class CorpService extends Api
         }
 
         $cache_key = self::SUITE_ACCESS_TOKEN_PREFIX . $this->suite_id;
-        $this->suite_access_token = getCache($cache_key);
+        $this->suite_access_token = $this->getCache($cache_key);
         if ($this->suite_access_token) {
             return $this->suite_access_token;
         }
@@ -74,7 +73,7 @@ abstract class CorpService extends Api
         $response = $client->post(self::MAIN_URL . '/get_suite_token', $options);
         $response = json_decode($response->getBody()->getContents(), true);
         $this->suite_access_token = $response['suite_access_token'];
-        setCache($cache_key, $this->suite_access_token, $response['expires_in']);
+        $this->setCache($cache_key, $this->suite_access_token, $response['expires_in']);
         return $this->suite_access_token;
     }
 
@@ -85,7 +84,7 @@ abstract class CorpService extends Api
         }
 
         $cache_key = self::SUITE_CORP_ACCESS_TOKEN_PREFIX . $this->suite_id . '-' . $company_id;
-        $this->corp_access_tokens[$company_id] = getCache($cache_key);
+        $this->corp_access_tokens[$company_id] = $this->getCache($cache_key);
         if ($this->corp_access_tokens[$company_id]) {
             return $this->corp_access_tokens[$company_id];
         }
@@ -99,7 +98,7 @@ abstract class CorpService extends Api
         $response = $client->post(self::MAIN_URL . '/get_corp_token?suite_access_token=' . $this->getSuiteToken(), $options);
         $response = json_decode($response->getBody()->getContents(), true);
         $this->corp_access_tokens[$company_id] = $response['access_token'];
-        setCache($cache_key, $this->corp_access_tokens[$company_id], $response['expires_in']);
+        $this->setCache($cache_key, $this->corp_access_tokens[$company_id], $response['expires_in']);
         return $this->corp_access_tokens[$company_id];
     }
 

@@ -1,8 +1,6 @@
 <?php
 
-namespace shophy\tclexiang\helper;
-
-use shophy\tclexiang\exception\ArgumentException;
+namespace shophy\tclexiang\helpers;
 
 class Utils
 {
@@ -14,44 +12,44 @@ class Utils
     static public function checkNotEmptyStr($var, $name)
     {
         if (!self::notEmptyStr($var))
-            throw new ArgumentException("can not be empty string", $name);
+            throw new exceptions\ArgumentException("can not be empty string", $name);
     }
 
     static public function checkIsUInt($var, $name)
     {
         if (!(is_int($var) && $var >= 0))
-            throw new ArgumentException("need unsigned int", $name);
+            throw new exceptions\ArgumentException("need unsigned int", $name);
     }
 
     static public function checkNotEmptyArray($var, $name)
     {
         if (!is_array($var) || count($var) == 0) {
-            throw new ArgumentException("can not be empty array", $name);
+            throw new exceptions\ArgumentException("can not be empty array", $name);
         }
     }
 
     static public function checkArrayKeyAndUInt(&$array, $key)
     {
         if (!isset($array[$key]))
-            throw new ArgumentException("required parameters are missing", $key);
+            throw new exceptions\ArgumentException("required parameters are missing", $key);
         if (!(is_int($array[$key]) && $array[$key] >= 0))
-            throw new ArgumentException("need unsigned int", $key);
+            throw new exceptions\ArgumentException("need unsigned int", $key);
     }
 
     static public function checkArrayKeyAndNotEmptyStr(&$array, $key)
     {
         if (!isset($array[$key]))
-            throw new ArgumentException("required parameters are missing", $key);
+            throw new exceptions\ArgumentException("required parameters are missing", $key);
         if (!self::notEmptyStr($array[$key]))
-            throw new ArgumentException("can not be empty string", $key);
+            throw new exceptions\ArgumentException("can not be empty string", $key);
     }
 
     static public function checkArrayKeyAndNotEmptyArray(&$array, $key)
     {
         if (!isset($array[$key]))
-            throw new ArgumentException("required parameters are missing", $key);
+            throw new exceptions\ArgumentException("required parameters are missing", $key);
         if (!notEmptyArray($array[$key]))
-            throw new ArgumentException("can not be empty array", $key);
+            throw new exceptions\ArgumentException("can not be empty array", $key);
     }
 
     static public function setIfNotNull($var, $name, &$args)
