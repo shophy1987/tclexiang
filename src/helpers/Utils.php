@@ -30,11 +30,50 @@ class Utils
         }
     }
 
+    static public function checkArrayKeyAndUInt(&$array, $key)
+    {
+        if (!isset($array[$key]))
+            throw new ArgumentException("required parameters are missing", $key);
+        if (!(is_int($array[$key]) && $array[$key] >= 0))
+            throw new ArgumentException("need unsigned int", $key);
+    }
+
+    static public function checkArrayKeyAndNotEmptyStr(&$array, $key)
+    {
+        if (!isset($array[$key]))
+            throw new ArgumentException("required parameters are missing", $key);
+        if (!self::notEmptyStr($array[$key]))
+            throw new ArgumentException("can not be empty string", $key);
+    }
+
+    static public function checkArrayKeyAndNotEmptyArray(&$array, $key)
+    {
+        if (!isset($array[$key]))
+            throw new ArgumentException("required parameters are missing", $key);
+        if (!notEmptyArray($array[$key]))
+            throw new ArgumentException("can not be empty array", $key);
+    }
+
     static public function setIfNotNull($var, $name, &$args)
     {
         if (!is_null($var)) {
             $args[$name] = $var;
         }
+    }
+
+    static function notEmptyArray($var) 
+    {
+        if (!is_array($var))
+            return false;
+
+        foreach ($var as $_val) {
+            if (is_array($_val) && !self::notEmptyArray($_val))
+                return false;
+            if (is_string($_val) && $_val == '')
+                return false;
+        }
+
+        return true;
     }
 
     static public function arrayGet($array, $key, $default=null)

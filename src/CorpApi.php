@@ -26,6 +26,7 @@ abstract class CorpApi extends Api
     use CertificateRewardTrait;
     use ShareTrait;
     use ExamTrait;
+    use ContactTrait;
 
 	const VERSION = 'v1';
 	const MAIN_URL = 'https://lxapi.lexiangla.com/cgi-bin';
