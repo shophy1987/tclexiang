@@ -88,20 +88,24 @@ abstract class CorpApi extends Api
         if (!empty($data)) {
             $headers["Content-Type"] = 'application/vnd.api+json';
         }
-        $request = new Request($method, self::MAIN_URL . '/' . self::VERSION . '/' . $uri, $headers, json_encode($data));
-        $client = new JsonApiClient(new Client());
 
-        $this->response = $client->sendRequest($request);
+        $client = new \GuzzleHttp\Client();
+        $this->response = $client->request($method, self::MAIN_URL.'/'.self::VERSION.'/'.$uri, ['headers' => $headers, 'json' => $data]);
+        return json_decode($this->response->getBody()->getContents(), true);
 
-        if ($this->response->getStatusCode() >= 400) {
-            return json_decode($this->response->getBody()->getContents(), true);
-        }
-        if ($this->response->getStatusCode() == 204) {
-            return [];
-        }
-        if (in_array($this->response->getStatusCode(), [200, 201, 202])) {
-            return $this->response->document()->toArray();
-        }
+        //$request = new Request($method, self::MAIN_URL . '/' . self::VERSION . '/' . $uri, $headers, json_encode($data));
+        //$client = new JsonApiClient(new Client());
+        //$this->response = $client->sendRequest($request);
+
+        // if ($this->response->getStatusCode() >= 400) {
+        //     return json_decode($this->response->getBody()->getContents(), true);
+        // }
+        // if ($this->response->getStatusCode() == 204) {
+        //     return [];
+        // }
+        // if (in_array($this->response->getStatusCode(), [200, 201, 202])) {
+        //     return $this->response->document()->toArray();
+        // }
     }
 
     public function response()

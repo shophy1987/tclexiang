@@ -2,6 +2,8 @@
 
 namespace shophy\tclexiang\traits;
 
+use shophy\tclexiang\helpers\Utils;
+
 trait NotifyTrait
 {
     protected $callback_secret;

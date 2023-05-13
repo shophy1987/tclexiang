@@ -2,90 +2,92 @@
 
 namespace shophy\tclexiang\traits;
 
+use shophy\tclexiang\helpers\Utils;
+
 trait ContactTrait
 {
 	// ============== 成员管理 ================
 
 	public function createUser($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'name');
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'phone');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'name');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'phone');
 
-        return $this->post('contact/user/create?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/user/create', $options);
     }
 
     public function updateUser($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
 
-        return $this->post('contact/user/update?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/user/update', $options);
     }
 
     public function resignUser($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
 
-        return $this->post('contact/user/resign?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/user/resign', $options);
     }
 
     public function entryUser($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
 
-        return $this->post('contact/user/entry?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/user/entry', $options);
     }
 
     public function forbiddenUsers($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyArray($options, 'staffs');
+    	Utils::checkArrayKeyAndNotEmptyArray($options, 'staffs');
 
-        return $this->post('contact/user/forbidden?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/user/forbidden', $options);
     }
 
     public function activeUsers($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyArray($options, 'staffs');
+    	Utils::checkArrayKeyAndNotEmptyArray($options, 'staffs');
 
-        return $this->post('contact/user/active?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/user/active', $options);
     }
 
 	public function addManageUser($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
 
-        return $this->post('contact/user/add-manager?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/user/add-manager', $options);
     }
 
     public function getUserStatus($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
 
-        return $this->get('contact/user/status?access_token='.$this->getAccessToken().'&staff_id='.$options['staff_id']);
+        return $this->get('contact/user/status', $options);
     }
 
     public function getUser($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'staff_id');
 
-        return $this->get('contact/user/get?access_token='.$this->getAccessToken().'&staff_id='.$options['staff_id']);
+        return $this->get('contact/user/get', $options);
     }
 
     public function getManageUsers()
     {
-        return $this->get('contact/user/managers?access_token='.$this->getAccessToken());
+        return $this->get('contact/user/managers');
     }
 
     public function getDepartUsers($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndUInt($options, 'department_id');
+    	Utils::checkArrayKeyAndUInt($options, 'department_id');
 
-        return $this->get('contact/user/list?access_token='.$this->getAccessToken(), $options);
+        return $this->get('contact/user/list', $options);
     }
 
     public function getUserExtraAttrs()
     {
-        return $this->get('contact/user/extra-attrs?access_token='.$this->getAccessToken());
+        return $this->get('contact/user/extra-attrs');
     }
 
     // ============== 成员管理 ================
@@ -94,36 +96,36 @@ trait ContactTrait
 
     public function createDepart($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'name');
-    	helpers\Utils::checkArrayKeyAndUInt($options, 'parent_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'name');
+    	Utils::checkArrayKeyAndUInt($options, 'parent_id');
 
-        return $this->post('contact/department/create?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/department/create', $options);
     }
 
     public function updateDepart($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndUInt($options, 'id');
+    	Utils::checkArrayKeyAndUInt($options, 'id');
 
-        return $this->post('contact/department/update?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/department/update', $options);
     }
 
     public function deleteDepart($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndUInt($options, 'id');
+    	Utils::checkArrayKeyAndUInt($options, 'id');
 
-        return $this->post('contact/department/delete?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/department/delete', $options);
     }
 
     public function getDepart($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndUInt($options, 'id');
+    	Utils::checkArrayKeyAndUInt($options, 'id');
 
-        return $this->get('contact/department/get?access_token='.$this->getAccessToken(), $options);
+        return $this->get('contact/department/get', $options);
     }
 
     public function getDeparts($options = [])
     {
-        return $this->get('contact/department/index?access_token='.$this->getAccessToken(), $options);
+        return $this->get('contact/department/index', $options);
     }
 
     // ============== 部门管理 ================
@@ -132,52 +134,52 @@ trait ContactTrait
 
     public function createTag($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'name');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'name');
 
-        return $this->post('contact/tag/create?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/tag/create', $options);
     }
 
     public function updateTag($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'id');
 
-        return $this->post('contact/tag/update?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/tag/update', $options);
     }
 
     public function deleteTag($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'id');
 
-        return $this->post('contact/tag/delete?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/tag/delete', $options);
     }
 
     public function getTags($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndUInt($options, 'offset');
-    	helpers\Utils::checkArrayKeyAndUInt($options, 'limit');
+    	Utils::checkArrayKeyAndUInt($options, 'offset');
+    	Utils::checkArrayKeyAndUInt($options, 'limit');
 
-        return $this->get('contact/tag/users?access_token='.$this->getAccessToken(), $options);
+        return $this->get('contact/tag/users', $options);
     }
 
     public function getTagUsers($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'tag_id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'tag_id');
 
-        return $this->get('contact/tag/users?access_token='.$this->getAccessToken(), $options);
+        return $this->get('contact/tag/users', $options);
     }
 
     public function addTagUsers($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'id');
 
-        return $this->post('contact/tag/add-users?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/tag/add-users', $options);
     }
 
     public function delTagUsers($options = [])
     {
-    	helpers\Utils::checkArrayKeyAndNotEmptyStr($options, 'id');
+    	Utils::checkArrayKeyAndNotEmptyStr($options, 'id');
 
-        return $this->post('contact/tag/del-users?access_token='.$this->getAccessToken(), $options);
+        return $this->post('contact/tag/del-users', $options);
     }
 
     // ============== 标签管理 ================
