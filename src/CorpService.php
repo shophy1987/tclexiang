@@ -14,7 +14,6 @@ abstract class CorpService extends Api
 	const MAIN_URL = 'https://lxapi.lexiangla.com/cgi-bin/service';
     const SUITE_TICKET_PREFIX = 'LX-SUITE-TICKET-';
     const SUITE_ACCESS_TOKEN_PREFIX = 'LX-SUITE-ACCESS-TOKEN-';
-    const SUITE_CORP_ACCESS_TOKEN_PREFIX = 'LX-SUITE-CORP-ACCESS-TOKEN-';
 
     protected $suite_id;
     protected $suite_secret;
@@ -37,7 +36,7 @@ abstract class CorpService extends Api
             return $this->suite_ticket;
         }
 
-        $this->suite_ticket = $this->getCache(self::SUITE_TICKET_CACHE_PREFIX . $this->suite_id);
+        $this->suite_ticket = $this->getCache(self::SUITE_TICKET_PREFIX . $this->suite_id);
         if ($this->suite_ticket) {
             return $this->suite_ticket;
         }
@@ -48,7 +47,7 @@ abstract class CorpService extends Api
     public function setSuiteTicket($suite_ticket)
     {
         $this->suite_ticket = $suite_ticket;
-        $this->setCache(self::SUITE_TICKET_CACHE_PREFIX . $this->suite_id, $this->suite_ticket, 600);
+        $this->setCache(self::SUITE_TICKET_PREFIX . $this->suite_id, $this->suite_ticket, 600);
     }
 
     public function getSuiteToken()
@@ -83,12 +82,6 @@ abstract class CorpService extends Api
             return $this->corp_access_tokens[$company_id];
         }
 
-        $cache_key = self::SUITE_CORP_ACCESS_TOKEN_PREFIX . $this->suite_id . '-' . $company_id;
-        $this->corp_access_tokens[$company_id] = $this->getCache($cache_key);
-        if ($this->corp_access_tokens[$company_id]) {
-            return $this->corp_access_tokens[$company_id];
-        }
-
         $options = ['json' => [
             'grant_type' => 'client_credentials',
             'company_id' => $company_id,
@@ -98,7 +91,6 @@ abstract class CorpService extends Api
         $response = $client->post(self::MAIN_URL . '/get_corp_token?suite_access_token=' . $this->getSuiteToken(), $options);
         $response = json_decode($response->getBody()->getContents(), true);
         $this->corp_access_tokens[$company_id] = $response['access_token'];
-        $this->setCache($cache_key, $this->corp_access_tokens[$company_id], $response['expires_in']);
         return $this->corp_access_tokens[$company_id];
     }
 
@@ -127,12 +119,5 @@ abstract class CorpService extends Api
         $client = new \GuzzleHttp\Client();
         $response = $client->post(self::MAIN_URL . '/get_user_info?suite_access_token=' . $this->getSuiteToken(), $options);
         return json_decode($response->getBody()->getContents(), true);
-    }
-
-    public function getCorpClient($company_id, $permanent_code)
-    {
-        $api = new CorpApi();
-        $api->setAccessToken($this->getCorpAccessToken($company_id, $permanent_code));
-        return $api;
     }
 }
